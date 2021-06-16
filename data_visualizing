@@ -1,0 +1,119 @@
+# import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt 
+import seaborn as sns 
+from matplotlib import font_manager, rc
+from matplotlib import style
+
+import warnings
+warnings.filterwarnings('ignore')
+
+# notebook 화면에서 바로 그림을 볼 수 있게 해줌
+%matplotlib inline  
+
+import matplotlib.pyplot as plt 
+import platform                
+
+from matplotlib import font_manager, rc
+plt.rcParams['axes.unicode_minus']= False
+
+path = 'c:/Windows/Fonts/malgun.ttf'
+font_name = font_manager.FontProperties(fname=path).get_name()
+plt.style.use('seaborn-darkgrid') 
+rc('font', family=font_name)
+
+df=pd.read_excel('C:\pbl_movie.xlsx',header=0)
+df.head()
+
+df.shape # 데이터 shape 파악
+df.describe() # 데이터 통계량 파악
+
+
+# 수상내역
+plt.figure(figsize=(10,5)) # 캔버스 사이즈 지정
+# Kernel Density Estimation Plot.
+kde=sns.kdeplot(df['수상내역'])  #확률밀도를 추정해 continuous한 그래프 그려줌
+kde.set_xlabel("수상내역")
+kde.set_ylabel("비율")
+plt.show()
+
+plt.figure(figsize=(10,5))
+dist=sns.distplot(df['수상내역'], kde=False)
+dist.set_xlabel("수상내역")
+dist.set_ylabel("해당 영화 수")
+plt.show()
+
+# skewness and kurtosis
+print("Skewness: %f" % df['수상내역'].skew()) #치우침 정도
+print("Kurtosis: %f" % df['수상내역'].kurt()) #뾰족한 정도
+
+# 전국 스크린수
+plt.figure(figsize=(10,5))
+kde=sns.kdeplot(df['전국 스크린수']) 
+kde.set_xlabel("전국 스크린수")
+kde.set_ylabel("비율")
+plt.show()
+
+# skewness and kurtosis
+print("Skewness: %f" % df['전국 스크린수'].skew()) #치우침 정도
+print("Kurtosis: %f" % df['전국 스크린수'].kurt()) #뾰족한 정도
+
+# 경쟁작
+plt.figure(figsize=(10,5))
+kde=sns.kdeplot(df['경쟁작'], bw=0.4) # 데이터간 간격을 조정해 자연스러운 그래프 생성
+kde.set_xlabel("경쟁작")
+kde.set_ylabel("비율")
+plt.show()
+
+plt.figure(figsize=(10,5))
+dist=sns.distplot(df['경쟁작'], kde=False) # Histogram, 범주의 가짓수가 적어 kde 그래프가 잘 작동하지 않음
+dist.set_xlabel("경쟁작")
+dist.set_ylabel("해당 영화 수")
+plt.show()
+
+# skewness and kurtosis
+print("Skewness: %f" % df['경쟁작'].skew()) #치우침 정도
+print("Kurtosis: %f" % df['경쟁작'].kurt()) #뾰족한 정도
+
+# 러닝타임
+plt.figure(figsize=(10,5))
+kde=sns.kdeplot(df['러닝타임']) 
+kde.set_xlabel("러닝타임")
+kde.set_ylabel("비율")
+plt.show()
+
+# skewness and kurtosis
+print("Skewness: %f" % df['러닝타임'].skew()) #치우침 정도
+print("Kurtosis: %f" % df['러닝타임'].kurt()) #뾰족한 정도
+
+# 네티즌 평점
+plt.figure(figsize=(10,5))
+kde=sns.kdeplot(df['네티즌 평점']) 
+kde.set_xlabel("네티즌 평점")
+kde.set_ylabel("비율")
+plt.show()
+
+# skewness and kurtosis
+print("Skewness: %f" % df['네티즌 평점'].skew()) #치우침 정도
+print("Kurtosis: %f" % df['네티즌 평점'].kurt()) #뾰족한 정도
+
+# 성별 (gender) 의 빈도표
+plt.figure()
+df_cut['주연 top50 출연 여부'].value_counts().plot(kind='barh')
+plt.xlabel('count')
+plt.ylabel('출연/안함')
+plt.title('top50 배우가 주연인지 여부')
+plt.show()
+
+# 성별 (gender) 의 빈도표
+plt.figure()
+df_cut['주연 top50 출연 여부'].value_counts().plot(kind='barh')
+plt.xlabel('count')
+plt.ylabel('출연/안함')
+plt.title('top50 배우가 주연인지 여부')
+plt.show()
+
+sns.regplot(x=df["수상내역"], y=df["전국 관객수"])
+sns.regplot(x=df["러닝타임"], y=df["전국 관객수"])
+sns.regplot(x=df["전국 스크린수"], y=df["전국 관객수"])
+sns.regplot(x=df["네티즌 평점"], y=df["전국 관객수"])
